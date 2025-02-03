@@ -3,6 +3,7 @@ using System.Drawing.Dds.Bc7;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -343,6 +344,9 @@ namespace System.Drawing.Dds
         }
 
         #region Standard Decompression Methods
+
+        #region Packed Formats
+
         [DxgiDecompressor(B5G6R5_UNorm)]
         internal static byte[] DecompressB5G6R5(byte[] data, int height, int width, bool bgr24) => DecompressPacked(data, height, width, bgr24, BgraColour.From565);
 
@@ -367,6 +371,10 @@ namespace System.Drawing.Dds
 
             return output;
         }
+
+        #endregion
+
+        #region BC Formats
 
         [FourCCDecompressor(FourCC.DXT1)]
         [DxgiDecompressor(BC1_Typeless), DxgiDecompressor(BC1_UNorm)]
@@ -974,9 +982,83 @@ namespace System.Drawing.Dds
 
             return output;
         }
+
+        #endregion
+
+        #region FP Formats
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static byte RealToByte(float value) => (byte)MathF.Round(Math.Clamp(value, 0f, 1f) * byte.MaxValue);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static byte RealToByte(Half value) => (byte)MathF.Round(Math.Clamp((float)value, 0f, 1f) * byte.MaxValue);
+
+        [DxgiDecompressor(R32G32B32_Float)]
+        internal static byte[] DecompressRGBFP32(byte[] data, int height, int width, bool bgr24)
+        {
+            var bpp = bgr24 ? 3 : 4;
+            var output = new byte[width * height * bpp];
+            var input = MemoryMarshal.Cast<byte, float>(data);
+
+            for (int inputIndex = 0, outputIndex = 0; inputIndex < input.Length && outputIndex < output.Length; inputIndex += 3, outputIndex += bpp)
+            {
+                //note: input is rgb, output is bgr
+                output[outputIndex + 0] = RealToByte(input[inputIndex + 2]);
+                output[outputIndex + 1] = RealToByte(input[inputIndex + 1]);
+                output[outputIndex + 2] = RealToByte(input[inputIndex + 0]);
+                if (!bgr24)
+                    output[outputIndex + 3] = byte.MaxValue;
+            }
+
+            return output;
+        }
+
+        [DxgiDecompressor(R32G32B32A32_Float)]
+        internal static byte[] DecompressRGBAFP32(byte[] data, int height, int width, bool bgr24)
+        {
+            var bpp = bgr24 ? 3 : 4;
+            var output = new byte[width * height * bpp];
+            var input = MemoryMarshal.Cast<byte, float>(data);
+
+            for (int inputIndex = 0, outputIndex = 0; inputIndex < input.Length && outputIndex < output.Length; inputIndex += 4, outputIndex += bpp)
+            {
+                //note: input is rgba, output is bgra
+                output[outputIndex + 0] = RealToByte(input[inputIndex + 2]);
+                output[outputIndex + 1] = RealToByte(input[inputIndex + 1]);
+                output[outputIndex + 2] = RealToByte(input[inputIndex + 0]);
+                if (!bgr24)
+                    output[outputIndex + 3] = RealToByte(input[inputIndex + 3]);
+            }
+
+            return output;
+        }
+
+        [DxgiDecompressor(R16G16B16A16_Float)]
+        internal static byte[] DecompressRGBAFP16(byte[] data, int height, int width, bool bgr24)
+        {
+            var bpp = bgr24 ? 3 : 4;
+            var output = new byte[width * height * bpp];
+            var input = MemoryMarshal.Cast<byte, Half>(data);
+
+            for (int inputIndex = 0, outputIndex = 0; inputIndex < input.Length && outputIndex < output.Length; inputIndex += 4, outputIndex += bpp)
+            {
+                //note: input is rgba, output is bgra
+                output[outputIndex + 0] = RealToByte(input[inputIndex + 2]);
+                output[outputIndex + 1] = RealToByte(input[inputIndex + 1]);
+                output[outputIndex + 2] = RealToByte(input[inputIndex + 0]);
+                if (!bgr24)
+                    output[outputIndex + 3] = RealToByte(input[inputIndex + 3]);
+            }
+
+            return output;
+        }
+
+        #endregion
+
         #endregion
 
         #region Xbox Decompression Methods
+
         [XboxDecompressor(A8)]
         internal static byte[] DecompressA8(byte[] data, int height, int width, bool bgr24)
         {
@@ -1191,6 +1273,7 @@ namespace System.Drawing.Dds
 
         [XboxDecompressor(DXT5a_alpha)]
         internal static byte[] DecompressDXT5a_alpha(byte[] data, int height, int width, bool bgr24) => DecompressBC3AlphaOnly(data, height, width, false, true, bgr24);
+
         #endregion
 
         private static sbyte Lerp(sbyte p1, sbyte p2, float fraction) => (sbyte)MathF.Round((p1 * (1 - fraction)) + (p2 * fraction));
