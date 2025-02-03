@@ -16,7 +16,6 @@
     public enum XboxFormat
     {
         Unknown,
-        A8,
         AY8,
         CTX1,
         DXN,
@@ -30,6 +29,6 @@
         DXT5a_alpha,
         V8U8,
         Y8,
-        Y8A8,
+        Y8A8
     }
 }
