@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace System.Drawing.Dds.Annotations
+﻿namespace System.Drawing.Dds.Annotations
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
     internal sealed class DxgiDecompressorAttribute : Attribute, IFormatAttribute<DxgiFormat>

@@ -10,6 +10,7 @@
         <Copyright>Copyright © $(Authors) 2019 - $([System.DateTime]::Now.Year)</Copyright>
         <RepositoryUrl>https://github.com/Gravemind2401/System.Drawing.Dds</RepositoryUrl>
         <AssemblyOriginatorKeyFile>$(MSBuildProjectName).snk</AssemblyOriginatorKeyFile>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <ItemGroup>
