@@ -1132,8 +1132,8 @@ namespace System.Drawing.Dds
         internal static byte[] DecompressDXT5a_alpha(byte[] data, int height, int width, bool bgr24) => DecompressBC3AlphaOnly(data, height, width, false, true, bgr24);
         #endregion
 
-        private static sbyte Lerp(sbyte p1, sbyte p2, float fraction) => (sbyte)((p1 * (1 - fraction)) + (p2 * fraction));
-        private static byte Lerp(byte p1, byte p2, float fraction) => (byte)((p1 * (1 - fraction)) + (p2 * fraction));
+        private static sbyte Lerp(sbyte p1, sbyte p2, float fraction) => (sbyte)MathF.Round((p1 * (1 - fraction)) + (p2 * fraction));
+        private static byte Lerp(byte p1, byte p2, float fraction) => (byte)MathF.Round((p1 * (1 - fraction)) + (p2 * fraction));
         private static float Lerp(float p1, float p2, float fraction) => (p1 * (1 - fraction)) + (p2 * fraction);
 
         private static byte CalculateZVector(byte r, byte g)
@@ -1142,7 +1142,7 @@ namespace System.Drawing.Dds
             var y = Lerp(-1f, 1f, g / 255f);
             var z = (float)Math.Sqrt(1 - x * x - y * y);
 
-            return (byte)((z + 1) / 2 * 255f);
+            return (byte)MathF.Round((z + 1) / 2 * 255f);
         }
 
         private static byte[] Rotate(byte[] buffer, int width, int height, int bpp, RotateFlipType rotation)
@@ -1302,9 +1302,9 @@ namespace System.Drawing.Dds
 
                 return new BgraColour
                 {
-                    B = (byte)((0xFF / maskB) * (value & maskB)),
-                    G = (byte)((0xFF / maskG) * ((value >> 5) & maskG)),
-                    R = (byte)((0xFF / maskR) * ((value >> 11) & maskR)),
+                    B = (byte)MathF.Round(255f / maskB * (value & maskB)),
+                    G = (byte)MathF.Round(255f / maskG * ((value >> 5) & maskG)),
+                    R = (byte)MathF.Round(255f / maskR * ((value >> 11) & maskR)),
                     A = byte.MaxValue
                 };
             }
@@ -1318,10 +1318,10 @@ namespace System.Drawing.Dds
 
                 return new BgraColour
                 {
-                    B = (byte)((0xFF / maskB) * (value & maskB)),
-                    G = (byte)((0xFF / maskG) * ((value >> 5) & maskG)),
-                    R = (byte)((0xFF / maskR) * ((value >> 10) & maskR)),
-                    A = (byte)((0xFF / maskA) * ((value >> 15) & maskA))
+                    B = (byte)MathF.Round(255f / maskB * (value & maskB)),
+                    G = (byte)MathF.Round(255f / maskG * ((value >> 5) & maskG)),
+                    R = (byte)MathF.Round(255f / maskR * ((value >> 10) & maskR)),
+                    A = (byte)MathF.Round(255f / maskA * ((value >> 15) & maskA))
                 };
             }
 
@@ -1334,10 +1334,10 @@ namespace System.Drawing.Dds
 
                 return new BgraColour
                 {
-                    B = (byte)((0xFF / maskB) * (value & maskB)),
-                    G = (byte)((0xFF / maskG) * ((value >> 4) & maskG)),
-                    R = (byte)((0xFF / maskR) * ((value >> 8) & maskR)),
-                    A = (byte)((0xFF / maskA) * ((value >> 12) & maskA)),
+                    B = (byte)MathF.Round(255f / maskB * (value & maskB)),
+                    G = (byte)MathF.Round(255f / maskG * ((value >> 4) & maskG)),
+                    R = (byte)MathF.Round(255f / maskR * ((value >> 8) & maskR)),
+                    A = (byte)MathF.Round(255f / maskA * ((value >> 12) & maskA)),
                 };
             }
 
