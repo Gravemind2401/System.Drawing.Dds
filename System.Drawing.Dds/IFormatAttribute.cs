@@ -1,4 +1,4 @@
-﻿namespace System.Drawing.Dds.Annotations
+﻿namespace System.Drawing.Dds
 {
     internal interface IFormatAttribute<T>
     {

@@ -1,4 +1,4 @@
-﻿namespace System.Drawing.Dds.Annotations
+﻿namespace System.Drawing.Dds
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
     internal sealed class DxgiDecompressorAttribute : Attribute, IFormatAttribute<DxgiFormat>

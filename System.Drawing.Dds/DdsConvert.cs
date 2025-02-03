@@ -1,5 +1,4 @@
-﻿using System.Drawing.Dds.Annotations;
-using System.Drawing.Dds.Bc7;
+﻿using System.Drawing.Dds.Bc7;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
