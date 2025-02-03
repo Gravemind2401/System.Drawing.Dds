@@ -18,7 +18,7 @@
         private int position;
         public int Position
         {
-            get { return position; }
+            get => position;
             set
             {
                 if (value < 0)
@@ -69,7 +69,7 @@
             cacheBits = 0;
             cachePosition = offset * byteSize;
 
-            for (int i = 0; i < cacheSize / byteSize; i++)
+            for (var i = 0; i < cacheSize / byteSize; i++)
             {
                 if (offset + i >= stream.Length)
                     break;

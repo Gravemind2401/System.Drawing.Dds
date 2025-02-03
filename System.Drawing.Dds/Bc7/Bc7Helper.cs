@@ -22,7 +22,7 @@
         Unique
     }
 
-    internal struct BlockAttributes
+    internal readonly struct BlockAttributes
     {
         public readonly byte Mode;
         public readonly byte PartitionBits;
@@ -62,7 +62,7 @@
         public static readonly byte[,,] PartitionTable = new byte[MaxSubsets, MaxPartitions, MaxSubsetSize]
         {
             #region Single Subset
-		    {   // 1 Region case has no subsets (all 0)
+            {   // 1 Region case has no subsets (all 0)
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -277,7 +277,7 @@
         public static readonly byte[,,] FixUpTable = new byte[MaxSubsets, MaxPartitions, 3]
         {
             #region Single Subset Fixups
-		    {   // No fix-ups for 1st subset for BC6H or BC7
+            {   // No fix-ups for 1st subset for BC6H or BC7
                 { 0, 0, 0 },{ 0, 0, 0 },{ 0, 0, 0 },{ 0, 0, 0 },
                 { 0, 0, 0 },{ 0, 0, 0 },{ 0, 0, 0 },{ 0, 0, 0 },
                 { 0, 0, 0 },{ 0, 0, 0 },{ 0, 0, 0 },{ 0, 0, 0 },
@@ -295,7 +295,7 @@
                 { 0, 0, 0 },{ 0, 0, 0 },{ 0, 0, 0 },{ 0, 0, 0 },
                 { 0, 0, 0 },{ 0, 0, 0 },{ 0, 0, 0 },{ 0, 0, 0 }
             }, 
-	        #endregion
+            #endregion
 
             #region Two Subset Fixups
             {   // BC6H/BC7 Partition Set Fixups for 2 Subsets
@@ -318,7 +318,7 @@
                 { 0,15, 0 },{ 0,15, 0 },{ 0,15, 0 },{ 0,15, 0 },
                 { 0,15, 0 },{ 0, 2, 0 },{ 0, 2, 0 },{ 0,15, 0 }
             },
-	        #endregion
+            #endregion
 
             #region Three Subset Fixups
             {   // BC7 Partition Set Fixups for 3 Subsets
@@ -339,7 +339,7 @@
                 { 0, 5,15 },{ 0,10,15 },{ 0, 8,15 },{ 0,13,15 },
                 { 0,15, 3 },{ 0,12,15 },{ 0, 3,15 },{ 0, 3, 8 }
             }
-	        #endregion
+            #endregion
         };
 
         public static readonly BlockAttributes[] BlocksTypes = new BlockAttributes[]
@@ -354,9 +354,9 @@
             new BlockAttributes(7, 6, 0, 0, 2, 5, 5, PBitMode.Unique, 2, 0)
         };
 
-        private static readonly uint[] Weights2 = new uint[] { 0, 21, 43, 64 };
-        private static readonly uint[] Weights3 = new uint[] { 0, 9, 18, 27, 37, 46, 55, 64 };
-        private static readonly uint[] Weights4 = new uint[] { 0, 4, 9, 13, 17, 21, 26, 30, 34, 38, 43, 47, 51, 55, 60, 64 };
+        private static readonly uint[] Weights2 = [0, 21, 43, 64];
+        private static readonly uint[] Weights3 = [0, 9, 18, 27, 37, 46, 55, 64];
+        private static readonly uint[] Weights4 = [0, 4, 9, 13, 17, 21, 26, 30, 34, 38, 43, 47, 51, 55, 60, 64];
 
         public static byte Interpolate(int e0, int e1, int index, int indexprecision)
         {

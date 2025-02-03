@@ -7,6 +7,9 @@
         <UseWPF>true</UseWPF>
         <SignAssembly>true</SignAssembly>
         <Authors>Gravemind2401</Authors>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>$(AssemblyVersion)</FileVersion>
+        <Version>$(VersionPrefix)$(AssemblyVersion)</Version>
         <Copyright>Copyright © $(Authors) 2019 - $([System.DateTime]::Now.Year)</Copyright>
         <RepositoryUrl>https://github.com/Gravemind2401/System.Drawing.Dds</RepositoryUrl>
         <AssemblyOriginatorKeyFile>$(MSBuildProjectName).snk</AssemblyOriginatorKeyFile>
