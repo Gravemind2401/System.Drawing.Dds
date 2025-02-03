@@ -242,7 +242,8 @@ namespace System.Drawing.Dds
                         case DxgiFormat.B8G8R8A8_UNorm:
                             return bgr24 ? ToArray(SkipNth(data, 4), true, virtualHeight, Width) : data;
 
-                        default: throw new NotSupportedException("The DxgiFormat is not supported.");
+                        default:
+                            throw new NotSupportedException($"The {nameof(DxgiFormat)} '{dx10Header.DxgiFormat}' is not supported.");
                     }
                 }
             }
@@ -250,14 +251,14 @@ namespace System.Drawing.Dds
             {
                 return decompressMethodsXbox.TryGetValue(xboxHeader.XboxFormat, out var xboxDecode)
                     ? xboxDecode(data, virtualHeight, Width, bgr24)
-                    : throw new NotSupportedException("The XboxFormat is not supported.");
+                    : throw new NotSupportedException($"The {nameof(XboxFormat)} '{xboxHeader.XboxFormat}' is not supported.");
             }
             else
             {
                 var fourcc = (FourCC)header.PixelFormat.FourCC;
                 return decompressMethodsFourCC.TryGetValue(fourcc, out var fourccDecode)
                     ? fourccDecode(data, virtualHeight, Width, bgr24)
-                    : throw new NotSupportedException("The FourCC is not supported.");
+                    : throw new NotSupportedException($"The {nameof(FourCC)} '{fourcc}' is not supported.");
             }
         }
 
