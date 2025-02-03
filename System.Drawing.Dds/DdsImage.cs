@@ -70,9 +70,7 @@ namespace System.Drawing.Dds
         /// <param name="pixelData">The binary data containing the pixels of the image.</param>
         public DdsImage(int height, int width, FourCC fourCC, byte[] pixelData)
             : this(height, width, (int)fourCC, pixelData)
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Creates a new instance of <see cref="DdsImage"/> with the specified dimensions and pixel data, where the pixel data is uncompressed.
@@ -184,8 +182,11 @@ namespace System.Drawing.Dds
         }
 
         /// <summary>
-        /// Optional. Gets or sets the pitch of the image. This property is mutually exclusive with <see cref="LinearSize"/>.
+        /// Optional. Gets or sets the pitch of the image.
         /// </summary>
+        /// <remarks>
+        /// This property is mutually exclusive with <see cref="LinearSize"/>.
+        /// </remarks>
         public int? Pitch
         {
             get => header.Flags.HasFlag(HeaderFlags.Pitch) ? header.PitchOrLinearSize : null;
@@ -203,8 +204,11 @@ namespace System.Drawing.Dds
         }
 
         /// <summary>
-        /// Optional. Gets or sets the linear size of the image. This property is mutually exclusive with <see cref="Pitch"/>.
+        /// Optional. Gets or sets the linear size of the image.
         /// </summary>
+        /// <remarks>
+        /// This property is mutually exclusive with <see cref="Pitch"/>.
+        /// </remarks>
         public int? LinearSize
         {
             get => header.Flags.HasFlag(HeaderFlags.LinearSize) ? header.PitchOrLinearSize : null;
@@ -309,8 +313,10 @@ namespace System.Drawing.Dds
 
         /// <summary>
         /// Gets or sets miscellaneous flags for the image.
-        /// <para>These flags are only used if the FourCC code is set to <see cref="FourCC.DX10"/></para>
         /// </summary>
+        /// <remarks>
+        /// These flags are only used if the FourCC code is set to <see cref="FourCC.DX10"/>
+        /// </remarks>
         public D3D10ResourceMiscFlags DX10ResourceFlags
         {
             get => dx10Header.MiscFlags;
@@ -319,8 +325,10 @@ namespace System.Drawing.Dds
 
         /// <summary>
         /// Gets or sets flags indicating the type of alpha used in the image.
-        /// <para>These flags are only used if the FourCC code is set to <see cref="FourCC.DX10"/></para>
         /// </summary>
+        /// <remarks>
+        /// These flags are only used if the FourCC code is set to <see cref="FourCC.DX10"/>
+        /// </remarks>
         public D3D10ResourceMiscFlag2 DX10AlphaFlags
         {
             get => dx10Header.MiscFlags2;
@@ -329,8 +337,10 @@ namespace System.Drawing.Dds
 
         /// <summary>
         /// Gets or sets miscellaneous flags for the image.
-        /// <para>These flags are only used if the FourCC code is set to <see cref="FourCC.XBOX"/></para>
         /// </summary>
+        /// <remarks>
+        /// These flags are only used if the FourCC code is set to <see cref="FourCC.XBOX"/>
+        /// </remarks>
         public D3D10ResourceMiscFlags XboxResourceFlags
         {
             get => xboxHeader.MiscFlags;
@@ -339,8 +349,10 @@ namespace System.Drawing.Dds
 
         /// <summary>
         /// Gets or sets flags indicating the type of alpha used in the image.
-        /// <para>These flags are only used if the FourCC code is set to <see cref="FourCC.XBOX"/></para>
         /// </summary>
+        /// <remarks>
+        /// These flags are only used if the FourCC code is set to <see cref="FourCC.XBOX"/>
+        /// </remarks>
         public D3D10ResourceMiscFlag2 XboxAlphaFlags
         {
             get => xboxHeader.MiscFlags2;
