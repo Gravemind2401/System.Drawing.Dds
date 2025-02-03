@@ -2,28 +2,18 @@
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFramework>net462</TargetFramework>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <Nullable>disable</Nullable>
         <UseWPF>true</UseWPF>
         <SignAssembly>true</SignAssembly>
-        <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-        <AssemblyOriginatorKeyFile>System.Drawing.Dds.snk</AssemblyOriginatorKeyFile>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <RunCodeAnalysis>true</RunCodeAnalysis>
-        <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+        <Authors>Gravemind2401</Authors>
+        <Copyright>Copyright © $(Authors) 2019 - $([System.DateTime]::Now.Year)</Copyright>
+        <RepositoryUrl>https://github.com/Gravemind2401/System.Drawing.Dds</RepositoryUrl>
+        <AssemblyOriginatorKeyFile>$(MSBuildProjectName).snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <CodeAnalysisDictionary Include="CustomDictionary.xml">
-            <SubType>Designer</SubType>
-        </CodeAnalysisDictionary>
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-        <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+        <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
     </ItemGroup>
 
 </Project>
